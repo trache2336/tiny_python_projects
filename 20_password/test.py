@@ -2,10 +2,10 @@
 """tests for password.py"""
 
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput
+import secrets
 
 prg = './password.py'
 words = '../inputs/words.txt'
@@ -44,7 +44,7 @@ def test_bad_num():
     """Dies on bad num"""
 
     bad = random_string()
-    flag = '-n' if random.choice([0, 1]) else '--num'
+    flag = '-n' if secrets.choice([0, 1]) else '--num'
     rv, out = getstatusoutput(f'{prg} {flag} {bad} {words}')
     assert rv != 0
     assert re.search(f"invalid int value: '{bad}'", out)
@@ -55,7 +55,7 @@ def test_bad_num_words():
     """Dies on bad num"""
 
     bad = random_string()
-    flag = '-w' if random.choice([0, 1]) else '--num_words'
+    flag = '-w' if secrets.choice([0, 1]) else '--num_words'
     rv, out = getstatusoutput(f'{prg} {flag} {bad} {words}')
     assert rv != 0
     assert re.search(f"invalid int value: '{bad}'", out)
@@ -66,7 +66,7 @@ def test_bad_min_word_len():
     """Dies on bad min_word_len"""
 
     bad = random_string()
-    flag = '-m' if random.choice([0, 1]) else '--min_word_len'
+    flag = '-m' if secrets.choice([0, 1]) else '--min_word_len'
     rv, out = getstatusoutput(f'{prg} {flag} {bad} {words}')
     assert rv != 0
     assert re.search(f"invalid int value: '{bad}'", out)
@@ -77,7 +77,7 @@ def test_bad_max_word_len():
     """Dies on bad max_word_len"""
 
     bad = random_string()
-    flag = '-m' if random.choice([0, 1]) else '--max_word_len'
+    flag = '-m' if secrets.choice([0, 1]) else '--max_word_len'
     rv, out = getstatusoutput(f'{prg} {flag} {bad} {words}')
     assert rv != 0
     assert re.search(f"invalid int value: '{bad}'", out)
@@ -88,7 +88,7 @@ def test_bad_seed():
     """Dies on bad seed"""
 
     bad = random_string()
-    flag = '-s' if random.choice([0, 1]) else '--seed'
+    flag = '-s' if secrets.choice([0, 1]) else '--seed'
     rv, out = getstatusoutput(f'{prg} {flag} {bad} {words}')
     assert rv != 0
     assert re.search(f"invalid int value: '{bad}'", out)
@@ -163,5 +163,5 @@ def test_l33t():
 def random_string():
     """generate a random string"""
 
-    k = random.randint(5, 10)
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=k))
+    k = secrets.SystemRandom().randint(5, 10)
+    return ''.join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=k))

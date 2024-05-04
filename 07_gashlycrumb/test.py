@@ -3,9 +3,9 @@
 
 import os
 import re
-import random
 import string
 from subprocess import getstatusoutput
+import secrets
 
 prg = './gashlycrumb.py'
 
@@ -14,7 +14,7 @@ prg = './gashlycrumb.py'
 def file_flag():
     """Either -f or --file"""
 
-    return '-f' if random.randint(0, 1) else '--file'
+    return '-f' if secrets.SystemRandom().randint(0, 1) else '--file'
 
 
 # --------------------------------------------------
@@ -39,7 +39,7 @@ def test_bad_file():
     """Test for bad --file"""
 
     bad = random_string()
-    letter = random.choice(string.ascii_lowercase)
+    letter = secrets.choice(string.ascii_lowercase)
     rv, out = getstatusoutput(f'{prg} {letter} -f {bad}')
     assert rv != 0
     expected = f"No such file or directory: '{bad}'"
@@ -103,5 +103,5 @@ def test_bad_letter():
 def random_string():
     """generate a random string"""
 
-    k = random.randint(5, 10)
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=k))
+    k = secrets.SystemRandom().randint(5, 10)
+    return ''.join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=k))

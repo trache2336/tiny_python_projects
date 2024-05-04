@@ -3,8 +3,8 @@
 
 import argparse
 import os
-import random
 from Bio import SeqIO
+import secrets
 
 
 # --------------------------------------------------
@@ -57,7 +57,7 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    random.seed(args.seed)
+    secrets.SystemRandom().seed(args.seed)
 
     total_num = 0
     for i, fh in enumerate(args.file, start=1):
@@ -69,7 +69,7 @@ def main():
         num_taken = 0
 
         for rec in SeqIO.parse(fh, 'fasta'):
-            if random.random() <= args.pct:
+            if secrets.SystemRandom().random() <= args.pct:
                 num_taken += 1
                 SeqIO.write(rec, out_fh, 'fasta')
 

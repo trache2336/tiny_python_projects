@@ -4,7 +4,7 @@
 import argparse
 import os
 import re
-import random
+import secrets
 
 
 # --------------------------------------------------
@@ -37,7 +37,7 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    random.seed(args.seed)
+    secrets.SystemRandom().seed(args.seed)
     splitter = re.compile("([a-zA-Z](?:[a-zA-Z']*[a-zA-Z])?)")
 
     for line in args.text.splitlines():
@@ -50,7 +50,7 @@ def scramble(word):
 
     if len(word) > 3 and re.match(r'\w+', word):
         middle = list(word[1:-1])
-        random.shuffle(middle)
+        secrets.SystemRandom().shuffle(middle)
         word = word[0] + ''.join(middle) + word[-1]
 
     return word
@@ -60,8 +60,8 @@ def scramble(word):
 def test_scramble():
     """Test scramble"""
 
-    state = random.getstate()
-    random.seed(1)
+    state = secrets.SystemRandom().getstate()
+    secrets.SystemRandom().seed(1)
     assert scramble("a") == "a"
     assert scramble("ab") == "ab"
     assert scramble("abc") == "abc"
@@ -69,7 +69,7 @@ def test_scramble():
     assert scramble("abcde") == "acbde"
     assert scramble("abcdef") == "aecbdf"
     assert scramble("abcde'f") == "abcd'ef"
-    random.setstate(state)
+    secrets.SystemRandom().setstate(state)
 
 
 # --------------------------------------------------

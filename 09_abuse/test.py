@@ -2,10 +2,10 @@
 """tests for abuse.py"""
 
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput, getoutput
+import secrets
 
 prg = './abuse.py'
 
@@ -41,7 +41,7 @@ def test_bad_adjective_str():
 def test_bad_adjective_num():
     """bad_adjectives"""
 
-    n = random.choice(range(-10, 0))
+    n = secrets.choice(range(-10, 0))
     rv, out = getstatusoutput(f'{prg} -a {n}')
     print(out)
     assert rv != 0
@@ -62,7 +62,7 @@ def test_bad_number_str():
 def test_bad_number_int():
     """bad_number"""
 
-    n = random.choice(range(-10, 0))
+    n = secrets.choice(range(-10, 0))
     rv, out = getstatusoutput(f'{prg} -n {n}')
     assert rv != 0
     assert re.search(f'--number "{n}" must be > 0', out)
@@ -130,4 +130,4 @@ You filthy, detestable, cullionly, base lunatic!
 def random_string():
     """generate a random filename"""
 
-    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
+    return ''.join(secrets.SystemRandom().choices(string.ascii_lowercase + string.digits, k=5))
