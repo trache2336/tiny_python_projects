@@ -46,7 +46,7 @@ def verse(bottle):
     return '\n'.join([
         f'{bottle} bottle{s1} of beer on the wall,',
         f'{bottle} bottle{s1} of beer,',
-        f'Take one down, pass it around,',
+        'Take one down, pass it around,',
         f'{num_next} bottle{s2} of beer on the wall!',
     ])
 
