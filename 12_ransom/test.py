@@ -3,8 +3,8 @@
 
 import os
 import re
-import random
 from subprocess import getstatusoutput
+import secrets
 
 prg = './ransom.py'
 fox = '../inputs/fox.txt'
@@ -13,7 +13,7 @@ now = '../inputs/now.txt'
 
 # --------------------------------------------------
 def seed_flag():
-    return '-s' if random.randint(0, 1) else '--seed'
+    return '-s' if secrets.SystemRandom().randint(0, 1) else '--seed'
 
 
 # --------------------------------------------------

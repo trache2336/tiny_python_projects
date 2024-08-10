@@ -2,10 +2,10 @@
 """tests for wc.py"""
 
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput
+import secrets
 
 prg = './wc.py'
 empty = './inputs/empty.txt'
@@ -36,8 +36,8 @@ def test_usage():
 def random_string():
     """generate a random string"""
 
-    k = random.randint(5, 10)
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=k))
+    k = secrets.SystemRandom().randint(5, 10)
+    return ''.join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=k))
 
 
 # --------------------------------------------------
