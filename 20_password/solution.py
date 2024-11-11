@@ -2,9 +2,9 @@
 """Password maker, https://xkcd.com/936/"""
 
 import argparse
-import random
 import re
 import string
+import secrets
 
 
 # --------------------------------------------------
@@ -66,7 +66,7 @@ def get_args():
 # --------------------------------------------------
 def main():
     args = get_args()
-    random.seed(args.seed)  # <1>
+    secrets.SystemRandom().seed(args.seed)  # <1>
     words = set()
 
     def word_len(word):
@@ -79,7 +79,7 @@ def main():
 
     words = sorted(words)
     passwords = [
-        ''.join(random.sample(words, args.num_words)) for _ in range(args.num)
+        ''.join(secrets.SystemRandom().sample(words, args.num_words)) for _ in range(args.num)
     ]
 
     if args.l33t:
@@ -103,7 +103,7 @@ def l33t(text):
     xform = str.maketrans({
         'a': '@', 'A': '4', 'O': '0', 't': '+', 'E': '3', 'I': '1', 'S': '5'
     })
-    return text.translate(xform) + random.choice(string.punctuation)
+    return text.translate(xform) + secrets.choice(string.punctuation)
 
 
 # --------------------------------------------------
@@ -111,7 +111,7 @@ def ransom(text):
     """Randomly choose an upper or lowercase letter to return"""
 
     return ''.join(
-        map(lambda c: c.upper() if random.choice([0, 1]) else c.lower(), text))
+        map(lambda c: c.upper() if secrets.choice([0, 1]) else c.lower(), text))
 
 
 # --------------------------------------------------

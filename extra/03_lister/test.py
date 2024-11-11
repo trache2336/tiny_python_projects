@@ -2,10 +2,10 @@
 """tests for order.py"""
 
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput
+import secrets
 
 prg = './order.py'
 
@@ -58,7 +58,7 @@ def test_two_elements():
 def test_two_elements_reversed():
     """two elements reversed"""
 
-    rev = '-r' if random.choice([0, 1]) else '--reverse'
+    rev = '-r' if secrets.choice([0, 1]) else '--reverse'
     rv, out = getstatusoutput(f'{prg} foo bar {rev}')
     assert rv == 0
     assert out.rstrip() == '  1: foo\n  2: bar'
@@ -84,7 +84,7 @@ def test_more_reverse():
     """MOAR"""
 
     items = 'one two three four five six seven eight nine ten zero'
-    rev = '-r' if random.choice([0, 1]) else '--reverse'
+    rev = '-r' if secrets.choice([0, 1]) else '--reverse'
     rv, out = getstatusoutput(f'{prg} {items} {rev}')
     assert rv == 0
     expected = '\n'.join([

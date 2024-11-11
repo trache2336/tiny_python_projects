@@ -5,7 +5,7 @@ from subprocess import getstatusoutput
 import os.path
 import re
 import string
-import random
+import secrets
 
 prg = './translate.py'
 dna = 'gaactacaccgttctcctggt'
@@ -16,7 +16,7 @@ rna = 'UGGCCAUGGCGCCCAGAACUGAGAUCAAUAGUACCCGUAUUAACGGGUGAA'
 def random_filename():
     """generate a random filename"""
 
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+    return ''.join(secrets.SystemRandom().choices(string.ascii_uppercase + string.digits, k=5))
 
 
 # --------------------------------------------------
@@ -107,7 +107,7 @@ def run(input_seq, codons, expected):
 
     random_file = random_filename()
     try:
-        flip = random.randint(0, 1)
+        flip = secrets.SystemRandom().randint(0, 1)
         out_file, out_arg = (random_file,
                              '-o ' + random_file) if flip == 1 else ('out.txt',
                                                                      '')

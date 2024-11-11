@@ -2,7 +2,6 @@
 """tests for sampler.py"""
 
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput
@@ -11,6 +10,7 @@ from Bio.SeqUtils import GC
 from numpy import mean
 from itertools import chain
 from shutil import rmtree
+import secrets
 
 prg = './sampler.py'
 n1k = './n1k.fa'
@@ -23,7 +23,7 @@ n1m = './n1m.fa'
 def random_string():
     """generate a random string"""
 
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+    return ''.join(secrets.SystemRandom().choices(string.ascii_uppercase + string.digits, k=5))
 
 
 # --------------------------------------------------
@@ -59,7 +59,7 @@ def test_bad_file():
 def test_bad_pct():
     """die on bad pct"""
 
-    bad = random.randint(1, 10)
+    bad = secrets.SystemRandom().randint(1, 10)
     rv, out = getstatusoutput(f'{prg} -p {bad} {n1k}')
     assert rv != 0
     assert re.match('usage:', out, re.I)

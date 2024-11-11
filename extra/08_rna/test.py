@@ -5,8 +5,8 @@ from subprocess import getstatusoutput
 import os.path
 import re
 import string
-import random
 from shutil import rmtree
+import secrets
 
 prg = './transcribe.py'
 input1 = './inputs/input1.txt'
@@ -17,7 +17,7 @@ input2 = './inputs/input2.txt'
 def random_filename():
     """generate a random filename"""
 
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+    return ''.join(secrets.SystemRandom().choices(string.ascii_uppercase + string.digits, k=5))
 
 
 # --------------------------------------------------
