@@ -3,9 +3,9 @@
 
 import re
 import os
-import random
 import string
 from subprocess import getstatusoutput
+import secrets
 
 prg = './mad.py'
 no_blanks = 'inputs/no_blanks.txt'
@@ -109,5 +109,5 @@ What here shall hammer, our toil shall strive to mend.
 def random_string():
     """generate a random string"""
 
-    k = random.randint(5, 10)
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=k))
+    k = secrets.SystemRandom().randint(5, 10)
+    return ''.join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=k))

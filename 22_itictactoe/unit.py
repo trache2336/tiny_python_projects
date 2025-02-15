@@ -1,5 +1,5 @@
 from itictactoe import format_board, find_winner
-import random
+import secrets
 
 
 # --------------------------------------------------
@@ -49,7 +49,7 @@ def test_winning():
         for state in wins:
             state = state.replace('P', player)
             dots = [i for i in range(len(state)) if state[i] == '.']
-            mut = random.sample(dots, k=2)
+            mut = secrets.SystemRandom().sample(dots, k=2)
             test_state = ''.join([
                 other_player if i in mut else state[i]
                 for i in range(len(state))
@@ -64,5 +64,5 @@ def test_losing():
     losing_state = list('XXOO.....')
 
     for i in range(10):
-        random.shuffle(losing_state)
+        secrets.SystemRandom().shuffle(losing_state)
         assert find_winner(''.join(losing_state)) == None

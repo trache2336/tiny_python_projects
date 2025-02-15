@@ -2,10 +2,10 @@
 """tests for days.py"""
 
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput
+import secrets
 
 prg = './head.py'
 sonnet = './inputs/sonnet-29.txt'
@@ -44,7 +44,7 @@ def test_bad_file():
 def test_bad_num():
     """Bad num"""
 
-    for bad in random.sample(range(-10, 1), 3):
+    for bad in secrets.SystemRandom().sample(range(-10, 1), 3):
         rv, out = getstatusoutput(f'{prg} -n {bad} {sonnet}')
         assert rv != 0
         assert re.search(f'--num "{bad}" must be greater than 0', out)
@@ -112,5 +112,5 @@ def test_num_3():
 def random_string():
     """generate a random string"""
 
-    k = random.randint(5, 10)
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=k))
+    k = secrets.SystemRandom().randint(5, 10)
+    return ''.join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=k))

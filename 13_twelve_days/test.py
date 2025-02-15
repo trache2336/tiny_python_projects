@@ -2,10 +2,10 @@
 """tests for twelve_days.py"""
 
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput, getoutput
+import secrets
 
 prg = './twelve_days.py'
 day_one = '\n'.join([
@@ -42,7 +42,7 @@ def test_usage():
 def test_bad_num():
     """test bad_num"""
 
-    for n in [random.choice(r) for r in (range(-10, -1), range(13, 20))]:
+    for n in [secrets.choice(r) for r in (range(-10, -1), range(13, 20))]:
         rv, out = getstatusoutput(f'{prg} -n {n}')
         assert rv != 0
         assert re.search(f'--num "{n}" must be between 1 and 12', out)
@@ -113,5 +113,5 @@ def test_all():
 def random_string():
     """generate a random string"""
 
-    k = random.randint(5, 10)
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=k))
+    k = secrets.SystemRandom().randint(5, 10)
+    return ''.join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=k))

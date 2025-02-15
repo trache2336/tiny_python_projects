@@ -2,7 +2,6 @@
 """tests for moog.py"""
 
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput
@@ -10,6 +9,7 @@ from Bio import SeqIO
 from Bio.SeqUtils import GC
 from numpy import mean
 from itertools import chain
+import secrets
 
 prg = './moog.py'
 
@@ -18,7 +18,7 @@ prg = './moog.py'
 def random_string():
     """generate a random string"""
 
-    return ''.join(random.choices(string.ascii_uppercase + string.digits, k=5))
+    return ''.join(secrets.SystemRandom().choices(string.ascii_uppercase + string.digits, k=5))
 
 
 # --------------------------------------------------
@@ -55,7 +55,7 @@ def test_bad_seqtype():
 def test_bad_pctgc():
     """die on bad pctgc"""
 
-    bad = random.randint(1, 10)
+    bad = secrets.SystemRandom().randint(1, 10)
     rv, out = getstatusoutput(f'{prg} -p {bad}')
     assert rv != 0
     assert re.match('usage:', out, re.I)
@@ -110,10 +110,10 @@ def test_options():
         if os.path.isfile(out_file):
             os.remove(out_file)
 
-        min_len = random.randint(50, 99)
-        max_len = random.randint(100, 150)
-        num_seqs = random.randint(100, 150)
-        pct_gc = random.random()
+        min_len = secrets.SystemRandom().randint(50, 99)
+        max_len = secrets.SystemRandom().randint(100, 150)
+        num_seqs = secrets.SystemRandom().randint(100, 150)
+        pct_gc = secrets.SystemRandom().random()
         cmd = (f'{prg} -m {min_len} -x {max_len} -o {out_file} '
                f'-n {num_seqs} -t rna -p {pct_gc:.02f} -s 1')
         rv, out = getstatusoutput(cmd)

@@ -3,10 +3,10 @@
 
 import hashlib
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput
+import secrets
 
 prg = './bottles.py'
 
@@ -32,7 +32,7 @@ def test_usage():
 def test_bad_int():
     """Bad integer value"""
 
-    bad = random.randint(-10, 0)
+    bad = secrets.SystemRandom().randint(-10, 0)
     rv, out = getstatusoutput(f'{prg} -n {bad}')
     assert rv != 0
     assert re.search(f'--num "{bad}" must be greater than 0', out)
@@ -42,7 +42,7 @@ def test_bad_int():
 def test_float():
     """float value"""
 
-    bad = round(random.random() * 10, 2)
+    bad = round(secrets.SystemRandom().random() * 10, 2)
     rv, out = getstatusoutput(f'{prg} --num {bad}')
     assert rv != 0
     assert re.search(f"invalid int value: '{bad}'", out)
@@ -98,8 +98,8 @@ def test_random():
         map(lambda x: x.split('\t'),
             open('sums.txt').read().splitlines()))
 
-    for n in random.choices(list(sums.keys()), k=10):
-        flag = '-n' if random.choice([0, 1]) == 1 else '--num'
+    for n in secrets.SystemRandom().choices(list(sums.keys()), k=10):
+        flag = '-n' if secrets.choice([0, 1]) == 1 else '--num'
         rv, out = getstatusoutput(f'{prg} {flag} {n}')
         out += '\n'  # because the last newline is removed
         assert rv == 0
@@ -110,5 +110,5 @@ def test_random():
 def random_string():
     """generate a random string"""
 
-    k = random.randint(5, 10)
-    return ''.join(random.choices(string.ascii_letters + string.digits, k=k))
+    k = secrets.SystemRandom().randint(5, 10)
+    return ''.join(secrets.SystemRandom().choices(string.ascii_letters + string.digits, k=k))
