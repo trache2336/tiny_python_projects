@@ -2,7 +2,7 @@
 """Heap abuse"""
 
 import argparse
-import random
+import secrets
 
 
 # --------------------------------------------------
@@ -50,7 +50,7 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    random.seed(args.seed)
+    secrets.SystemRandom().seed(args.seed)
 
     adjectives = """
     bankrupt base caterwauling corrupt cullionly detestable dishonest false
@@ -68,8 +68,8 @@ def main():
     """.strip().split()
 
     for _ in range(args.number):
-        adjs = ', '.join(random.sample(adjectives, k=args.adjectives))
-        print(f'You {adjs} {random.choice(nouns)}!')
+        adjs = ', '.join(secrets.SystemRandom().sample(adjectives, k=args.adjectives))
+        print(f'You {adjs} {secrets.choice(nouns)}!')
 
 
 # --------------------------------------------------

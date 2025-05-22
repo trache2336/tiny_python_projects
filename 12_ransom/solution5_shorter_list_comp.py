@@ -3,7 +3,7 @@
 
 import argparse
 import os
-import random
+import secrets
 
 
 # --------------------------------------------------
@@ -36,7 +36,7 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    random.seed(args.seed)
+    secrets.SystemRandom().seed(args.seed)
 
     # Method 5: List comprehension
     print(''.join([choose(char) for char in args.text]))
@@ -46,20 +46,20 @@ def main():
 def choose(char):
     """Randomly choose an upper or lowercase letter to return"""
 
-    return char.upper() if random.choice([0, 1]) else char.lower()
+    return char.upper() if secrets.choice([0, 1]) else char.lower()
 
 
 # --------------------------------------------------
 def test_choose():
     """Test choose"""
 
-    state = random.getstate()
-    random.seed(1)
+    state = secrets.SystemRandom().getstate()
+    secrets.SystemRandom().seed(1)
     assert choose('a') == 'a'
     assert choose('b') == 'b'
     assert choose('c') == 'C'
     assert choose('d') == 'd'
-    random.setstate(state)
+    secrets.SystemRandom().setstate(state)
 
 
 # --------------------------------------------------

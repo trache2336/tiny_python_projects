@@ -5,9 +5,9 @@ import argparse
 import csv
 import io
 import re
-import random
 import sys
 from tabulate import tabulate
+import secrets
 
 
 # --------------------------------------------------
@@ -57,7 +57,7 @@ def main():
     """Make a jazz noise here"""
 
     args = get_args()
-    random.seed(args.seed)
+    secrets.SystemRandom().seed(args.seed)
     exercises = read_csv(args.file)
 
     if not exercises:
@@ -68,8 +68,8 @@ def main():
         sys.exit(f'--num "{args.num}" > exercises "{num_exercises}"')
 
     wod = []
-    for name, low, high in random.sample(exercises, k=args.num):
-        reps = random.randint(low, high)
+    for name, low, high in secrets.SystemRandom().sample(exercises, k=args.num):
+        reps = secrets.SystemRandom().randint(low, high)
         if args.easy:
             reps = int(reps / 2)
         wod.append((name, reps))

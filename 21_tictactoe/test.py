@@ -3,9 +3,9 @@
 
 from subprocess import getstatusoutput, getoutput
 import os
-import random
 import re
 import string
+import secrets
 
 prg = './tictactoe.py'
 
@@ -63,7 +63,7 @@ def test_bad_board():
 def test_bad_player():
     """dies on bad player"""
 
-    bad = random.choice([c for c in string.ascii_uppercase if c not in 'XO'])
+    bad = secrets.choice([c for c in string.ascii_uppercase if c not in 'XO'])
     rv, out = getstatusoutput(f'{prg} -p {bad}')
     assert rv != 0
     expected = f"-p/--player: invalid choice: '{bad}'"
@@ -84,7 +84,7 @@ def test_bad_cell_int():
 def test_bad_cell_str():
     """dies on bad cell string value"""
 
-    bad = random.choice(string.ascii_letters)
+    bad = secrets.choice(string.ascii_letters)
     rv, out = getstatusoutput(f'{prg} --cell {bad}')
     assert rv != 0
     assert re.search(f"-c/--cell: invalid int value: '{bad}'", out, re.I)
@@ -94,7 +94,7 @@ def test_bad_cell_str():
 def test_both_player_and_cell():
     """test for both --player and --cell"""
 
-    player = random.choice('XO')
+    player = secrets.choice('XO')
     rv, out = getstatusoutput(f'{prg} --player {player}')
     assert rv != 0
     assert re.search('Must provide both --player and --cell', out)
@@ -206,7 +206,7 @@ def test_winning():
         for board in wins:
             board = board.replace('P', player)
             dots = [i for i in range(len(board)) if board[i] == '.']
-            mut = random.sample(dots, k=2)
+            mut = secrets.SystemRandom().sample(dots, k=2)
             test_board = ''.join([
                 other_player if i in mut else board[i]
                 for i in range(len(board))
@@ -221,6 +221,6 @@ def test_losing():
 
     losing_board = list('XXOO.....')
     for i in range(10):
-        random.shuffle(losing_board)
+        secrets.SystemRandom().shuffle(losing_board)
         out = getoutput(f'{prg} -b {"".join(losing_board)}').splitlines()
         assert out[-1].strip() == 'No winner.'

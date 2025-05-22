@@ -2,8 +2,8 @@
 """tests for rhymer.py"""
 
 import os
-import random
 from subprocess import getoutput
+import secrets
 
 prg = './rhymer.py'
 
@@ -69,6 +69,6 @@ def test_no_vowels():
     """no vowels"""
 
     consonants = 'bcdfghjklmnpqrstvwxyzBCDFGHJKLMNPQRSTVWXYZ'
-    bad = ''.join(random.sample(consonants, k=random.randint(4, 10)))
+    bad = ''.join(secrets.SystemRandom().sample(consonants, k=secrets.SystemRandom().randint(4, 10)))
     out = getoutput(f'{prg} {bad}')
     assert out == f'Cannot rhyme "{bad}"'

@@ -3,8 +3,8 @@
 
 import argparse
 import os
-import random
 import string
+import secrets
 
 
 # --------------------------------------------------
@@ -48,14 +48,14 @@ def main():
 
     args = get_args()
     text = args.text
-    random.seed(args.seed)
+    secrets.SystemRandom().seed(args.seed)
     alpha = ''.join(sorted(string.ascii_letters + string.punctuation))
     len_text = len(text)
     num_mutations = round(args.mutations * len_text)
     new_text = list(text)
 
-    for i in random.sample(range(len_text), num_mutations):
-        new_text[i] = random.choice(alpha.replace(new_text[i], ''))
+    for i in secrets.SystemRandom().sample(range(len_text), num_mutations):
+        new_text[i] = secrets.choice(alpha.replace(new_text[i], ''))
 
     print('You said: "{}"\nI heard : "{}"'.format(text, ''.join(new_text)))
 

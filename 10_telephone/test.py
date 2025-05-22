@@ -3,9 +3,9 @@
 
 from subprocess import getstatusoutput, getoutput
 import os
-import random
 import re
 import string
+import secrets
 
 prg = "./telephone.py"
 fox = '../inputs/fox.txt'
@@ -120,4 +120,4 @@ def test_fox_file_s2_m6():
 def random_string():
     """generate a random filename"""
 
-    return ''.join(random.choices(string.ascii_lowercase + string.digits, k=5))
+    return ''.join(secrets.SystemRandom().choices(string.ascii_lowercase + string.digits, k=5))

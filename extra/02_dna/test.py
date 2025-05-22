@@ -2,10 +2,10 @@
 """tests for dna.py"""
 
 import os
-import random
 import re
 import string
 from subprocess import getstatusoutput, getoutput
+import secrets
 
 prg = './dna.py'
 
@@ -30,7 +30,7 @@ def test_no_arg_and_usage():
 def run_single(base):
     """Run a single base test"""
 
-    num = random.randint(1, 10)
+    num = secrets.SystemRandom().randint(1, 10)
     given = base * num
     rv, out = getstatusoutput(f'{prg} {given}')
     assert rv == 0
